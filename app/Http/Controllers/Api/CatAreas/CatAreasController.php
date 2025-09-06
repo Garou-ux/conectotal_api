@@ -1,18 +1,18 @@
 <?php
 
-namespace App\Http\Controllers\Api\Productos;
+namespace App\Http\Controllers\Api\CatAreas;
 
-use App\Customs\Services\Productos\ProductosService;
+use App\Customs\Services\CatAreas\CatAreasService;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Producto\CreateProductoRequest;
+use App\Http\Requests\CatArea\CreateCatAreaRequest;
 use Illuminate\Http\Request;
 
-class ProductosController extends Controller
+class CatAreasController extends Controller
 {
-    public function __construct(private ProductosService $productosService){}
+    public function __construct(private CatAreasService $catAreaService){}
 
     public function getDataGridParams(Request $request){
-        $dataGridParam = $this->productosService->getDataGridParams($request->all());
+        $dataGridParam = $this->catAreaService->getDataGridParams($request->all());
 
         return response()->json([
             'status' => 'success',
@@ -20,8 +20,8 @@ class ProductosController extends Controller
         ]);
     }
 
-    public function getGridData(){
-        $gridData = $this->productosService->getGridData();
+    public function getGridData(Request $request){
+        $gridData = $this->catAreaService->getGridData($request->all());
         return response()->json([
             'status' => 'success',
             'data' => $gridData
@@ -29,18 +29,17 @@ class ProductosController extends Controller
     }
 
     public function getData(Request $request){
-        $data = $this->productosService->getData($request->get('id'));
+        $data = $this->catAreaService->getData($request->get('id'));
         return response()->json([
             'status' => 'success',
             'data' => $data
         ]);
     }
 
-
-    public function setData(CreateProductoRequest $request){
+    public function setData(CreateCatAreaRequest $request){
         try {
             $validatedData = $request->all();
-            $data = $this->productosService->setData($validatedData);
+            $data = $this->catAreaService->setData($validatedData);
             return response()->json([
                 'status' => 'success',
                 'message' => 'Creado Correctamente',
@@ -55,10 +54,12 @@ class ProductosController extends Controller
     }
 
     public function deleteData(Request $request){
-        $data = $this->productosService->deleteData($request->get('id'), 0);
+        $data = $this->catAreaService->deleteData($request->get('id'), 0);
         return response()->json([
             'status' => 'success',
             'data' => $data
         ]);
     }
+
+
 }

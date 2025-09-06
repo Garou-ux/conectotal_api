@@ -11,6 +11,15 @@ class PlantillaController extends Controller
 {
     public function __construct(private PlantillaService $plantillaService){}
 
+    public function getDataGridParams(Request $request){
+        $dataGridParams = $this->plantillaService->getDataGridParams($request->all());
+
+        return response()->json([
+            'status' => 'success',
+            'data' => $dataGridParams
+        ]);
+    }
+
     public function setData(CreatePlantilaRequest $request){
         $validatedData = $request->all();
         try {

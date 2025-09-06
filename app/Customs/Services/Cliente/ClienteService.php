@@ -16,6 +16,10 @@ class ClienteService {
             array(
                 'dataField' => "razon_social",
                 'caption' => "Razon Social"
+            ),
+            array(
+                'dataField' => "rfc",
+                'caption' => "RFC"
             )
         );
 

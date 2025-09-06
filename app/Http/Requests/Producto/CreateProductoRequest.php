@@ -22,11 +22,11 @@ class CreateProductoRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'producto_categoria_id' => ['required','integer'],
+            // 'producto_categoria_id' => ['','integer'],
             'clave' => ['required','string'],
             'descripcion' => ['required', 'string'],
-            'clave_sat' => ['required', 'string'],
-            'es_servicio' => ['required', 'boolean']
+            // 'clave_sat' => ['required', 'string'],
+            // 'es_servicio' => ['required', 'boolean']
         ];
     }
 }

@@ -5,11 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Cliente extends Model
+class Proveedor extends Model
 {
     use HasFactory;
 
-    protected $table = 'clientes';
+    protected $table = 'proveedores';
+
+    protected $primaryKey = 'id';
 
     protected $fillable = [
         'nombre',
@@ -31,8 +33,4 @@ class Cliente extends Model
         'satcat_estados_clave',
         'empresa_id',
     ];
-
-    public function scopeOfActivo($query, $activo){
-        return $query->where('clientes.activo', $activo);
-    }
 }

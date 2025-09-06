@@ -1,18 +1,17 @@
 <?php
 
-namespace App\Http\Controllers\Api\Productos;
+namespace App\Http\Controllers\Api\Requisiciones;
 
-use App\Customs\Services\Productos\ProductosService;
+use App\Customs\Services\Requisiciones\RequisicionesService;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Producto\CreateProductoRequest;
 use Illuminate\Http\Request;
 
-class ProductosController extends Controller
+class RequisicionesController extends Controller
 {
-    public function __construct(private ProductosService $productosService){}
+    public function __construct(private RequisicionesService $requisicionesService){}
 
-    public function getDataGridParams(Request $request){
-        $dataGridParam = $this->productosService->getDataGridParams($request->all());
+     public function getDataGridParams(Request $request){
+        $dataGridParam = $this->requisicionesService->getDataGridParams($request->all());
 
         return response()->json([
             'status' => 'success',
@@ -21,7 +20,7 @@ class ProductosController extends Controller
     }
 
     public function getGridData(){
-        $gridData = $this->productosService->getGridData();
+        $gridData = $this->requisicionesService->getGridData();
         return response()->json([
             'status' => 'success',
             'data' => $gridData
@@ -29,7 +28,7 @@ class ProductosController extends Controller
     }
 
     public function getData(Request $request){
-        $data = $this->productosService->getData($request->get('id'));
+        $data = $this->requisicionesService->getData($request->get('id'));
         return response()->json([
             'status' => 'success',
             'data' => $data
@@ -37,10 +36,10 @@ class ProductosController extends Controller
     }
 
 
-    public function setData(CreateProductoRequest $request){
+    public function setData(Request $request){
         try {
             $validatedData = $request->all();
-            $data = $this->productosService->setData($validatedData);
+            $data = $this->requisicionesService->setData($validatedData);
             return response()->json([
                 'status' => 'success',
                 'message' => 'Creado Correctamente',
@@ -55,7 +54,7 @@ class ProductosController extends Controller
     }
 
     public function deleteData(Request $request){
-        $data = $this->productosService->deleteData($request->get('id'), 0);
+        $data = $this->requisicionesService->deleteData($request->get('id'), 0);
         return response()->json([
             'status' => 'success',
             'data' => $data

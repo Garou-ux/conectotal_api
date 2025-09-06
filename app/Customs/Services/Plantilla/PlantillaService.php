@@ -6,6 +6,25 @@ use App\Models\Plantilla;
 
 class PlantillaService{
 
+    public function getDataGridParams($data){
+        $columns = array(
+            array(
+                'dataField' => "id",
+                'caption' => "# Empleado"
+            ),
+            array(
+                'dataField' => "nombre_completo",
+                'caption' => "Nombre"
+            ),
+            array(
+                'dataField' => "rfc",
+                'caption' => "RFC"
+            )
+        );
+
+        return $columns;
+    }
+
     public function setData($data){
         $plantilla = Plantilla::updateOrCreate([
             'id' => $data['id']

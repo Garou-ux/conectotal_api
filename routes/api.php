@@ -23,9 +23,10 @@ use App\Http\Controllers\Api\Roles\RolesController;
 |
 */
 use App\Http\Controllers\Api\Auth\AuthController;
+use App\Http\Controllers\Api\CatAreas\CatAreasController;
+use App\Http\Controllers\Api\CotizacionesProveedor\CotizacionesProveedoresController as CotizacionesProveedorCotizacionesProveedoresController;
 use App\Http\Controllers\Api\Profile\PasswordController;
-
-
+use App\Http\Controllers\CotizacionesProveedoresController;
 
 Route::post('auth/register', [AuthController::class, 'register']);
 Route::post('auth/login', [AuthController::class, 'login']);
@@ -62,6 +63,7 @@ Route::middleware(['auth'])->group(function () {
     });
 
     Route::prefix('productos')->group(function () {
+        Route::post('/getDataGridParams', [ProductosController::class, 'getDataGridParams'])->name('productos.getDataGridParams');
         Route::post('/setData', [ProductosController::class, 'setData'])->name('productos.setData');
         Route::post('/getGridData', [ProductosController::class, 'getGridData'])->name('productos.getGridData');
         Route::post('/getData', [ProductosController::class, 'getData'])->name('productos.getData');
@@ -76,6 +78,7 @@ Route::middleware(['auth'])->group(function () {
     });
 
     Route::prefix('plantillas')->group(function () {
+        Route::post('/getDataGridParams', [PlantillaController::class, 'getDataGridParams'])->name('plantillas.getDataGridParams');
         Route::post('/setData', [PlantillaController::class, 'setData'])->name('plantillas.setData');
         Route::post('/getGridData', [PlantillaController::class, 'getGridData'])->name('plantillas.getGridData');
         Route::post('/getData', [PlantillaController::class, 'getData'])->name('plantillas.getData');
@@ -87,6 +90,21 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/getGridData', [RolesController::class, 'getGridData'])->name('roles.getGridData');
         Route::post('/getData', [RolesController::class, 'getData'])->name('roles.getData');
         Route::post('/deleteData', [RolesController::class, 'deleteData'])->name('roles.deleteData');
+    });
+
+    Route::prefix('catAreas')->group(function () {
+        Route::post('/getDataGridParams', [ProductosController::class, 'getDataGridParams'])->name('catAreas.getDataGridParams');
+        Route::post('/setData', [CatAreasController::class, 'setData'])->name('catAreas.setData');
+        Route::post('/getGridData', [CatAreasController::class, 'getGridData'])->name('catAreas.getGridData');
+        Route::post('/getData', [CatAreasController::class, 'getData'])->name('catAreas.getData');
+        Route::post('/deleteData', [CatAreasController::class, 'deleteData'])->name('catAreas.deleteData');
+    });
+
+    Route::prefix('cotizacionesProveedores')->group(function () {
+        Route::post('/setData', [CotizacionesProveedorCotizacionesProveedoresController::class, 'setData'])->name('cotizacionesProveedores.setData');
+        Route::post('/getGridData', [CotizacionesProveedorCotizacionesProveedoresController::class, 'getGridData'])->name('cotizacionesProveedores.getGridData');
+        Route::post('/getData', [CotizacionesProveedorCotizacionesProveedoresController::class, 'getData'])->name('cotizacionesProveedores.getData');
+        Route::post('/deleteData', [CotizacionesProveedorCotizacionesProveedoresController::class, 'deleteData'])->name('cotizacionesProveedores.deleteData');
     });
 
 });

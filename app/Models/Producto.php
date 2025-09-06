@@ -19,6 +19,7 @@ class Producto extends Model
         'descripcion',
         'clave_sat',
         'es_servicio',
+        'precio',
         'activo'
     ];
 

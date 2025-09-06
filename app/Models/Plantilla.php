@@ -18,6 +18,7 @@ class Plantilla extends Model
         'apellido_materno',
         'rfc',
         'email',
+        'rol_id',
         'activo'
     ];
 
