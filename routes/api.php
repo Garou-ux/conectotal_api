@@ -26,6 +26,7 @@ use App\Http\Controllers\Api\Auth\AuthController;
 use App\Http\Controllers\Api\CatAreas\CatAreasController;
 use App\Http\Controllers\Api\CotizacionesProveedor\CotizacionesProveedoresController as CotizacionesProveedorCotizacionesProveedoresController;
 use App\Http\Controllers\Api\Profile\PasswordController;
+use App\Http\Controllers\Api\Requisiciones\RequisicionesController;
 use App\Http\Controllers\CotizacionesProveedoresController;
 
 Route::post('auth/register', [AuthController::class, 'register']);
@@ -98,6 +99,14 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/getGridData', [CatAreasController::class, 'getGridData'])->name('catAreas.getGridData');
         Route::post('/getData', [CatAreasController::class, 'getData'])->name('catAreas.getData');
         Route::post('/deleteData', [CatAreasController::class, 'deleteData'])->name('catAreas.deleteData');
+    });
+
+    Route::prefix('requisiciones')->group(function () {
+        Route::post('/getDataGridParams', [RequisicionesController::class, 'getDataGridParams'])->name('requisiciones.getDataGridParams');
+        Route::post('/getGridData', [RequisicionesController::class, 'getGridData'])->name('requisiciones.getGridData');
+        Route::post('/getData', [RequisicionesController::class, 'getData'])->name('requisiciones.getData');
+        Route::post('/setData', [RequisicionesController::class, 'setData'])->name('requisiciones.setData');
+        Route::post('/deleteData', [RequisicionesController::class, 'deleteData'])->name('requisiciones.deleteData');
     });
 
     Route::prefix('cotizacionesProveedores')->group(function () {

@@ -37,8 +37,12 @@ class RequisicionesService {
         return $columns;
     }
 
-    public function getGridData(){
-        return Requisicion::ofActivo(1)->get();
+    public function getGridData($data){
+        $params = array(
+            'dateStart' => $data['dateStart'],
+            'dateEnd' => $data['dateEnd']
+        );
+        return Requisicion::ofDataGrid($params)->ofActivo(1)->get();
     }
 
     public function getData($requisicion_id){

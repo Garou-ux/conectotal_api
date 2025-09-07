@@ -18,4 +18,10 @@ class CatArea extends Model
         'activo',
         'empresa_id'
     ];
+
+    public function scopeOfActivo($query, $activo){
+        return $query->where(
+            'cat_areas.activo', $activo
+        );
+    }
 }

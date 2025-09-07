@@ -19,4 +19,8 @@ class Estatus extends Model
     public function scopeOfActivo($query, $activo){
         return $query->where('estatus.activo', $activo);
     }
+
+    public function scopeOfDescripcion($query, $descripcion){
+        return $query->where('estatus.descripcion', $descripcion);
+    }
 }

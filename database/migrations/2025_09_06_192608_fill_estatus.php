@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Estatus;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -49,6 +50,10 @@ $estatus = [
     ['descripcion' => 'En Tránsito', 'activo' => 1],
     ['descripcion' => 'Dañado', 'activo' => 1],
 ];
+
+    foreach ($estatus as $v) {
+        Estatus::create($v);
+    }
 
     }
 

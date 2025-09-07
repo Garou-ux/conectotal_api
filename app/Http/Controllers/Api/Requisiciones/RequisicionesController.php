@@ -19,8 +19,8 @@ class RequisicionesController extends Controller
         ]);
     }
 
-    public function getGridData(){
-        $gridData = $this->requisicionesService->getGridData();
+    public function getGridData(Request $request){
+        $gridData = $this->requisicionesService->getGridData($request->all());
         return response()->json([
             'status' => 'success',
             'data' => $gridData

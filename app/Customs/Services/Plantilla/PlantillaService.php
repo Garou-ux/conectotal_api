@@ -2,6 +2,7 @@
 
 namespace App\Customs\Services\Plantilla;
 
+use App\Models\CatArea;
 use App\Models\Plantilla;
 
 class PlantillaService{
@@ -19,6 +20,10 @@ class PlantillaService{
             array(
                 'dataField' => "rfc",
                 'caption' => "RFC"
+            ),
+            array(
+                'dataField' => "area",
+                'caption' => "Area"
             )
         );
 
@@ -34,12 +39,13 @@ class PlantillaService{
     }
 
     public function getGridData(){
-        return Plantilla::ofActivo(1)->get();
+        return Plantilla::ofGridData()->ofActivo(1)->get();
     }
 
     public function getData($id){
         return [
             'data' => Plantilla::find($id),
+            'cat_areas' => CatArea::ofActivo(1)->get()
         ];
     }
 
