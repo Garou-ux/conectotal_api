@@ -26,6 +26,7 @@ use App\Http\Controllers\Api\Auth\AuthController;
 use App\Http\Controllers\Api\CatAreas\CatAreasController;
 use App\Http\Controllers\Api\CotizacionesProveedor\CotizacionesProveedoresController as CotizacionesProveedorCotizacionesProveedoresController;
 use App\Http\Controllers\Api\Profile\PasswordController;
+use App\Http\Controllers\Api\Proveedor\ProveedorController;
 use App\Http\Controllers\Api\Requisiciones\RequisicionesController;
 use App\Http\Controllers\CotizacionesProveedoresController;
 
@@ -61,6 +62,14 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/getData', [ClientesController::class, 'getData'])->name('clientes.getData');
         Route::post('/setData', [ClientesController::class, 'setData'])->name('clientes.setData');
         Route::post('/deleteData', [ClientesController::class, 'deleteData'])->name('clientes.deleteData');
+    });
+
+    Route::prefix('proveedores')->group(function () {
+        Route::post('/getDataGridParams', [ProveedorController::class, 'getDataGridParams'])->name('proveedores.getDataGridParams');
+        Route::post('/getGridData', [ProveedorController::class, 'getGridData'])->name('proveedores.getGridData');
+        Route::post('/getData', [ProveedorController::class, 'getData'])->name('proveedores.getData');
+        Route::post('/setData', [ProveedorController::class, 'setData'])->name('proveedores.setData');
+        Route::post('/deleteData', [ProveedorController::class, 'deleteData'])->name('proveedores.deleteData');
     });
 
     Route::prefix('productos')->group(function () {
@@ -107,9 +116,11 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/getData', [RequisicionesController::class, 'getData'])->name('requisiciones.getData');
         Route::post('/setData', [RequisicionesController::class, 'setData'])->name('requisiciones.setData');
         Route::post('/deleteData', [RequisicionesController::class, 'deleteData'])->name('requisiciones.deleteData');
+        Route::post('/getRequisicionesForCotizacion', [RequisicionesController::class, 'getRequisicionesForCotizacion'])->name('requisiciones.getRequisicionesForCotizacion');
     });
 
     Route::prefix('cotizacionesProveedores')->group(function () {
+        Route::post('/getDataGridParams', [CotizacionesProveedorCotizacionesProveedoresController::class, 'getDataGridParams'])->name('cotizacionesProveedores.getDataGridParams');
         Route::post('/setData', [CotizacionesProveedorCotizacionesProveedoresController::class, 'setData'])->name('cotizacionesProveedores.setData');
         Route::post('/getGridData', [CotizacionesProveedorCotizacionesProveedoresController::class, 'getGridData'])->name('cotizacionesProveedores.getGridData');
         Route::post('/getData', [CotizacionesProveedorCotizacionesProveedoresController::class, 'getData'])->name('cotizacionesProveedores.getData');

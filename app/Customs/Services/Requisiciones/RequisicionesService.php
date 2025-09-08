@@ -79,4 +79,8 @@ class RequisicionesService {
 
         return $requisicion;
     }
+
+    public function getRequisicionesForCotizacion(){
+        return RequisicionDetalle::ofReqCoti()->ofActivo(0)->get();
+    }
 }

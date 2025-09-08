@@ -22,7 +22,11 @@ class CotizacionProveedorDetalle extends Model
         'descuento',
         'iva',
         'total',
-        'activo'
+        'activo',
+        'borrado_logico',
+        'cantidad',
+        'requisicion_id',
+        'requisicion_detalle_id'
     ];
 
     public function scopeOfCotizacionProveedorId($query,$cotizacionProveedorId){
@@ -31,12 +35,14 @@ class CotizacionProveedorDetalle extends Model
             productos.clave
         ")->join('productos', function($join){
             $join->on('productos.id', 'cotizaciones_proveedores_detalles.producto_id');
-        });
+        })->where(
+            'cotizaciones_proveedores_detalles.cotizacion_proveedor_id', $cotizacionProveedorId
+        );
     }
 
     public function scopeOfActivo($query, $activo){
         return $query->where(
-            'cotizaciones_proveedores_detalles.activo', $activo
+            'cotizaciones_proveedores_detalles.borrado_logico', $activo
         );
     }
 }

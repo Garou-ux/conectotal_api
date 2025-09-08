@@ -28,7 +28,7 @@ class CotizacionProveedor extends Model
     ];
 
     public function scopeOfDataGrid($query, $params){
-        return $query->selecRaw("
+        return $query->selectRaw("
             cotizaciones_proveedores.id,
             cotizaciones_proveedores.requisicion_id,
             cotizaciones_proveedores.fecha,
@@ -43,19 +43,19 @@ class CotizacionProveedor extends Model
         })->join('estatus', function($join){
             $join->on('estatus.id', 'cotizaciones_proveedores.estatus_id');
         })->whereBetween(
-            'fecha', $params
-        )->where([
-            ['cotizaciones_proveedores.activo', 1]
-        ])
-        ->get();
+            'fecha', [$params['dateStart'], $params['dateEnd']]
+        );
     }
 
-    public function getDataControl($id){
-        $data = array('data' => [], 'detalle' => []);
-
+    public static function getDataControl($id){
+        $data = array('data' => [], 'detalles' => []);
+        $data['productos'] = Producto::where('activo', 1)->get();
+        $data['proveedores'] = Proveedor::OfActivo(1)->get();
         if($id > 0){
             $data['data'] = CotizacionProveedor::find($id);
-            $data['detalle'] = CotizacionProveedorDetalle::ofCotizacionProveedorId($id)->ofActivo(1)->get();
+            $data['detalles'] = CotizacionProveedorDetalle::ofCotizacionProveedorId($id)->ofActivo(0)->get();
         }
+
+        return $data;
     }
 }

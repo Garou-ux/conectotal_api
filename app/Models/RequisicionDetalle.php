@@ -45,4 +45,25 @@ class RequisicionDetalle extends Model
             'requisiciones_detalles.borrado_logico', $activo
         );
     }
+
+    public function scopeOfReqCoti($query){
+        return $query->selectRaw("
+            requisiciones.fecha,
+            requisiciones_detalles.producto_id,
+            requisiciones_detalles.requisicion_id,
+            requisiciones_detalles.id as requisicion_detalle_id,
+            requisiciones_detalles.cantidad,
+            requisiciones_detalles.descripcion,
+            requisiciones_detalles.observacion,
+            productos.precio as valor_unitario,
+            productos.precio as importe,
+            productos.precio * 0.16 as iva,
+            (productos.precio * 0.16) + productos.precio as total,
+            0 as descuento
+        ")->join('requisiciones', function($join){
+            $join->on('requisiciones.id', 'requisiciones_detalles.requisicion_id');
+        })->join('productos', function($join){
+            $join->on('productos.id', 'requisiciones_detalles.producto_id');
+        });
+    }
 }

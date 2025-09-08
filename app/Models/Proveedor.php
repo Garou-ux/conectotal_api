@@ -33,4 +33,16 @@ class Proveedor extends Model
         'satcat_estados_clave',
         'empresa_id',
     ];
+
+    public function scopeOfActivo($query, $activo){
+        return $query->where(
+            'activo', 1
+        );
+    }
+
+    public function scopeOfProveedorId($query, $id){
+        return $query->where(
+            'proveedores.id', $id
+        );
+    }
 }

@@ -60,4 +60,13 @@ class RequisicionesController extends Controller
             'data' => $data
         ]);
     }
+
+    public function getRequisicionesForCotizacion(Request $request){
+        $data = $this->requisicionesService->getRequisicionesForCotizacion();
+
+        return response()->json([
+            'status' => 'success',
+            'data' => $data
+        ]);
+    }
 }

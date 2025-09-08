@@ -22,7 +22,7 @@ class CotizacionProveedoresService {
                 'caption' => "Fecha"
             ),
             array(
-                'dataField' => "proveedor",
+                'dataField' => "razon_social",
                 'caption' => "Proveedor"
             ),
             array(
@@ -51,6 +51,10 @@ class CotizacionProveedoresService {
     }
 
     public function getGridData($params){
+        $data = array(
+            'dateStart' => $params['dateStart'],
+            'dateEnd' => $params['dateEnd']
+        );
         return CotizacionProveedor::ofDataGrid($params)->get();
     }
 
@@ -67,7 +71,7 @@ class CotizacionProveedoresService {
 
         if($data['detalle']){
             foreach ($data['detalle'] as $value) {
-                $values['cotizacion_proveedor_id'] = $cotizacionProveedor->cotizacion_proveedor_id;
+                $value['cotizacion_proveedor_id'] = $cotizacionProveedor->id;
                 CotizacionProveedorDetalle::updateOrCreate([
                     'id' => $value['id']
                 ], $value);
