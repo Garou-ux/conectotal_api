@@ -29,9 +29,11 @@ use App\Http\Controllers\Api\Profile\PasswordController;
 use App\Http\Controllers\Api\Proveedor\ProveedorController;
 use App\Http\Controllers\Api\Requisiciones\RequisicionesController;
 use App\Http\Controllers\CotizacionesProveedoresController;
+use App\Http\Controllers\InvoiceController;
 
 Route::post('auth/register', [AuthController::class, 'register']);
 Route::post('auth/login', [AuthController::class, 'login']);
+    Route::get('/invoice/pdf', [InvoiceController::class, 'invoice']);
 
 Route::middleware(['auth'])->group(function(){
     Route::post('/changePassword', [PasswordController::class, 'changeUserPassword']);
