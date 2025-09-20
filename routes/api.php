@@ -42,6 +42,9 @@ Route::middleware(['auth'])->group(function(){
     Route::post('auth/refresh', [AuthController::class, 'refresh']);
 });
 
+Route::get('/ping', fn() => ['ok' => true, 'time' => now()]);
+
+
 
 Route::middleware(['auth'])->group(function () {
 
