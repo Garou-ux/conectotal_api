@@ -27,6 +27,7 @@ use App\Http\Controllers\Api\CatAreas\CatAreasController;
 use App\Http\Controllers\Api\CotizacionesProveedor\CotizacionesProveedoresController as CotizacionesProveedorCotizacionesProveedoresController;
 use App\Http\Controllers\Api\Profile\PasswordController;
 use App\Http\Controllers\Api\Proveedor\ProveedorController;
+use App\Http\Controllers\Api\Proyectos\ProyectosController;
 use App\Http\Controllers\Api\Requisiciones\RequisicionesController;
 use App\Http\Controllers\CotizacionesProveedoresController;
 use App\Http\Controllers\InvoiceController;
@@ -126,7 +127,16 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/setData', [CotizacionesProveedorCotizacionesProveedoresController::class, 'setData'])->name('cotizacionesProveedores.setData');
         Route::post('/getGridData', [CotizacionesProveedorCotizacionesProveedoresController::class, 'getGridData'])->name('cotizacionesProveedores.getGridData');
         Route::post('/getData', [CotizacionesProveedorCotizacionesProveedoresController::class, 'getData'])->name('cotizacionesProveedores.getData');
+        Route::post('/convertCotizacionToProyecto', [CotizacionesProveedorCotizacionesProveedoresController::class, 'convertCotizacionToProyecto'])->name('cotizacionesProveedores.convertCotizacionToProyecto');
         Route::post('/deleteData', [CotizacionesProveedorCotizacionesProveedoresController::class, 'deleteData'])->name('cotizacionesProveedores.deleteData');
+    });
+
+    Route::prefix('proyectos')->group(function () {
+        Route::post('/getDataGridParams', [ProyectosController::class, 'getDatagridParams'])->name('proyectos.getDataGridParams');
+        Route::post('/getGridData', [ProyectosController::class, 'getGridData'])->name('proyectos.getGridData');
+        Route::post('/getData', [ProyectosController::class, 'getData'])->name('proyectos.getData');
+        Route::post('/setData', [ProyectosController::class, 'setData'])->name('proyectos.setData');
+        Route::post('/deleteData',[ProyectosController::class, 'deleteData'])->name('proyectos.deleteData');
     });
 
 });

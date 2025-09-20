@@ -2,6 +2,7 @@
 
 namespace App\Customs\Services\CotizacionProveedores;
 
+use App\Customs\Services\Proyectos\ProyectosService;
 use App\Models\CotizacionProveedor;
 use App\Models\CotizacionProveedorDetalle;
 
@@ -79,6 +80,20 @@ class CotizacionProveedoresService {
         }
 
         return $cotizacionProveedor;
+    }
+
+    public function convertCotizacionToProyecto($data){
+        $proyectoService = new ProyectosService();
+        $params = [
+            'id' => 0,
+            'cotizacion_proveedor_id' => $data['id'],
+            'proveedor_id' => $data['proveedor_id'],
+            'estatus_id' => 17,
+            'fecha' => $data['fecha'],
+            'observaciones' => $data['observaciones'],
+            'detalles' => $data['detalles']
+        ];
+        $proyectoService->setData($params);
     }
 
     public function deleteData($cotizacionProveedorId, $activo){

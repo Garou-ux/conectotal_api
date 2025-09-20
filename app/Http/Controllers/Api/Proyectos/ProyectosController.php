@@ -1,16 +1,17 @@
 <?php
 
-namespace App\Http\Controllers\Api\CotizacionesProveedor;
-use App\Customs\Services\CotizacionProveedores\CotizacionProveedoresService;
+namespace App\Http\Controllers\Api\Proyectos;
+
+use App\Customs\Services\Proyectos\ProyectosService;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class CotizacionesProveedoresController extends Controller
+class ProyectosController extends Controller
 {
-    public function __construct(private CotizacionProveedoresService $cotizacionProveedoresService){}
+    public function __construct(private ProyectosService $proyectosService){}
 
     public function getDataGridParams(Request $request){
-        $dataGridParams = $this->cotizacionProveedoresService->getDataGridParams($request->all());
+        $dataGridParams = $this->proyectosService->getDataGridParams($request->all());
 
         return response()->json([
             'status' => 'success',
@@ -19,7 +20,8 @@ class CotizacionesProveedoresController extends Controller
     }
 
     public function getGridData(Request $request){
-        $gridData = $this->cotizacionProveedoresService->getGridData($request->all());
+        $gridData = $this->proyectosService->getGridData($request->all());
+
         return response()->json([
             'status' => 'success',
             'data' => $gridData
@@ -27,7 +29,7 @@ class CotizacionesProveedoresController extends Controller
     }
 
     public function getData(Request $request){
-        $data = $this->cotizacionProveedoresService->getData($request->get('id'));
+        $data = $this->proyectosService->getData($request->get('id'));
 
         return response()->json([
             'status' => 'success',
@@ -38,7 +40,7 @@ class CotizacionesProveedoresController extends Controller
     public function setData(Request $request){
         try {
             $validatedData = $request->all();
-            $data = $this->cotizacionProveedoresService->setData($validatedData);
+            $data = $this->proyectosService->setData($validatedData);
             return response()->json([
                 'status' => 'success',
                 'message' => 'Creado Correctamente',
@@ -52,23 +54,12 @@ class CotizacionesProveedoresController extends Controller
         }
     }
 
-    public function convertCotizacionToProyecto(Request $request){
-        $data = $this->cotizacionProveedoresService->convertCotizacionToProyecto($request->all());
-
-        return response()->json([
-            'status' => 'success',
-            'data' => $data
-        ]);
-    }
-
-
     public function deleteData(Request $request){
-        $data = $this->cotizacionProveedoresService->deleteData($request->get('id'), false);
+        $data = $this->proyectosService->deleteData($request->get('id'), 0);
 
         return response()->json([
             'status' => 'success',
             'data' => $data
         ]);
     }
-
 }

@@ -24,7 +24,8 @@ class CotizacionProveedor extends Model
         'total',
         'activo',
         'empresa_id',
-        'user_id'
+        'user_id',
+        'requisiciones'
     ];
 
     public function scopeOfDataGrid($query, $params){
