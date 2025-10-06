@@ -7,9 +7,11 @@ return [
     'allowed_methods' => ['*'],
 
     'allowed_origins' => [
-        'https://simecproyectos.net',   // tu frontend en producción
-        'http://localhost:4200',        // si algún día pruebas con Angular/Vue
-        'http://127.0.0.1:8000'         // si pruebas API en local
+        'https://simecproyectos.net',     // producción
+        'http://localhost',               // navegadores locales (sin puerto)
+        'http://localhost:*',             // cualquier puerto local (ej. 4200, 8080)
+        'http://127.0.0.1',               // también sin puerto
+        'http://127.0.0.1:*',             // cualquier puerto
     ],
 
     'allowed_origins_patterns' => [],
@@ -20,7 +22,8 @@ return [
 
     'max_age' => 0,
 
-    'supports_credentials' => false,
-
+    'supports_credentials' => true,  // habilítalo si usas tokens/cookies
 ];
+
+
 

@@ -26,4 +26,17 @@ class Producto extends Model
     public function scopeOfActivo($query, $activo){
         return $query->where('activo', $activo);
     }
+
+    public function scopeSearch($query, $texto = null)
+    {
+        return $query->when($texto, function ($q) use ($texto) {
+            // Si hay texto, busca por clave o descripción
+            $q->where(function ($sub) use ($texto) {
+                $sub->where('descripcion', 'like', "%{$texto}%")
+                    ->orWhere('clave', 'like', "%{$texto}%")
+                    ->orWhere('clave_sat', 'like', "%{$texto}%");
+            });
+        });
+    }
+
 }

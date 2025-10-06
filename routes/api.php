@@ -83,6 +83,7 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/setData', [ProductosController::class, 'setData'])->name('productos.setData');
         Route::post('/getGridData', [ProductosController::class, 'getGridData'])->name('productos.getGridData');
         Route::post('/getData', [ProductosController::class, 'getData'])->name('productos.getData');
+        Route::post('/getProductsSearch', [ProductosController::class, 'getProductsSearch'])->name('getProductsSearch');
         Route::post('/deleteData', [ProductosController::class, 'deleteData'])->name('productos.deleteData');
     });
 

@@ -54,6 +54,14 @@ class ProductosController extends Controller
         }
     }
 
+    public function getProductsSearch(Request $request){
+        $data = $this->productosService->getProductsSearch($request->text);
+        return response()->json([
+            'status' => 'success',
+            'data' => $data
+        ]);
+    }
+
     public function deleteData(Request $request){
         $data = $this->productosService->deleteData($request->get('id'), 0);
         return response()->json([

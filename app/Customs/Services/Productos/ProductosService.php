@@ -47,6 +47,24 @@ class ProductosService {
         return $producto;
     }
 
+    public function getProductsSearch($data){
+    return Producto::search($data)
+        ->ofActivo(1)
+        ->orderBy('descripcion')
+        ->limit(50)
+        ->get()
+        ->map(function ($p) {
+            return [
+                'value' => $p->id,
+                'text' => $p->descripcion,
+                'clave' => $p->clave,
+                'precio' => $p->precio,
+                'producto_id' => $p->id,
+                'valueField' => $p->id
+            ];
+        });
+    }
+
     public function deleteData($producto_id, $activo){
         $producto = Producto::where('id', $producto_id)->update([
             'activo' => $activo

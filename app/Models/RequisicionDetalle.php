@@ -16,6 +16,7 @@ class RequisicionDetalle extends Model
     protected $fillable = [
         'requisicion_id',
         'producto_id',
+        'producto_clave',
         'cantidad',
         'cantidad_pendiente',
         'cantidad_comprada',
@@ -29,6 +30,7 @@ class RequisicionDetalle extends Model
         return $query->selectRaw("
             requisiciones_detalles.id,
             requisiciones_detalles.producto_id,
+            requisiciones_detalles.producto_clave,
             requisiciones_detalles.requisicion_id,
             requisiciones_detalles.cantidad,
             requisiciones_detalles.descripcion,
@@ -37,7 +39,9 @@ class RequisicionDetalle extends Model
             productos.clave
         ")->join('productos', function($join){
             $join->on('productos.id', 'requisiciones_detalles.producto_id');
-        });
+        })->where(
+            'requisiciones_detalles.requisicion_id', $requisicion_id
+        );
     }
 
     public function scopeOfActivo($query, $activo){
@@ -50,6 +54,7 @@ class RequisicionDetalle extends Model
         return $query->selectRaw("
             requisiciones.fecha,
             requisiciones_detalles.producto_id,
+            requisiciones_detalles.producto_clave,
             requisiciones_detalles.requisicion_id,
             requisiciones_detalles.id as requisicion_detalle_id,
             requisiciones_detalles.cantidad,
