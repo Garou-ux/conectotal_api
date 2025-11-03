@@ -21,7 +21,8 @@ class Requisicion extends Model
         'observaciones',
         'activo',
         'empresa_id',
-        'user_id'
+        'user_id',
+        'folio'
     ];
 
     public function scopeOfActivo($query, $activo){
@@ -33,6 +34,7 @@ class Requisicion extends Model
     public function scopeOfDataGrid($query, $params){
         return $query->selectRaw("
             requisiciones.id,
+            requisiciones.folio,
             requisiciones.fecha,
             CONCAT(plantillas.nombre, ' ', plantillas.apellido_paterno, ' ', plantillas.apellido_materno) as empleado,
             cat_areas.descripcion as area,

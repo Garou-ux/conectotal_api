@@ -2,6 +2,7 @@
 
 namespace App\Customs\Services\Requisiciones;
 
+use App\Customs\Services\FolioService;
 use App\Models\Requisicion;
 use App\Models\RequisicionDetalle;
 
@@ -11,6 +12,10 @@ class RequisicionesService {
             array(
                 'dataField' => "id",
                 'caption' => "# Requisicion",
+            ),
+            array(
+                'dataField' => "folio",
+                'caption' => "Folio"
             ),
             array(
                 'dataField' => "fecha",
@@ -52,6 +57,9 @@ class RequisicionesService {
     }
 
     public function setData($data){
+        if($data['id'] <= 0){
+            $data['folio'] = FolioService::generarFolio('R');
+        }
         $requisicion = Requisicion::updateOrCreate([
             'id' => $data['id']
         ],$data);
