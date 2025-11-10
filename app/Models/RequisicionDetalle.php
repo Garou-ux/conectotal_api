@@ -37,7 +37,7 @@ class RequisicionDetalle extends Model
             requisiciones_detalles.observacion,
             requisiciones_detalles.borrado_logico,
             productos.clave
-        ")->join('productos', function($join){
+        ")->leftJoin('productos', function($join){
             $join->on('productos.id', 'requisiciones_detalles.producto_id');
         })->where(
             'requisiciones_detalles.requisicion_id', $requisicion_id

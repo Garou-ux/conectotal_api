@@ -39,4 +39,17 @@ class Producto extends Model
         });
     }
 
+    public static function setProducto($param){
+        $prodExists = self::where('descripcion',$param)->first();
+
+        if($prodExists == null){
+            self::create([
+                'clave' => $param['descripcion'],
+                'descripcion' => $param['descripcion'],
+                'clave_sat' => ''
+            ]);
+        }
+
+    }
+
 }

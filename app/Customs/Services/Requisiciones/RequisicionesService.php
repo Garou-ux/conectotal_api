@@ -3,6 +3,7 @@
 namespace App\Customs\Services\Requisiciones;
 
 use App\Customs\Services\FolioService;
+use App\Models\Producto;
 use App\Models\Requisicion;
 use App\Models\RequisicionDetalle;
 
@@ -66,6 +67,9 @@ class RequisicionesService {
 
         if($data['detalle']){
             foreach ($data['detalle'] as $value) {
+                if($data['__confirm']){
+                    Producto::setProducto($value);
+                }
                 $value['requisicion_id'] = $requisicion->id;
                 RequisicionDetalle::updateOrCreate([
                     'id' => $value['id']

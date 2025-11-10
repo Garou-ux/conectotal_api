@@ -37,7 +37,7 @@ class RequisicionesController extends Controller
 
 
     public function setData(Request $request){
-        try {
+        // try {
             $validatedData = $request->all();
             $data = $this->requisicionesService->setData($validatedData);
             return response()->json([
@@ -45,12 +45,12 @@ class RequisicionesController extends Controller
                 'message' => 'Creado Correctamente',
                 'data' => $data
             ]);
-        } catch (\Throwable $th) {
-            return response()->json([
-                'status' => 'error',
-                'message' => 'Creation failed:' . $th->getMessage()
-            ], 500);
-        }
+        // } catch (\Throwable $th) {
+        //     return response()->json([
+        //         'status' => 'error',
+        //         'message' => 'Creation failed:' . $th->getMessage()
+        //     ], 500);
+        // }
     }
 
     public function deleteData(Request $request){
