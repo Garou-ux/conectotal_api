@@ -29,6 +29,8 @@ use App\Http\Controllers\Api\Profile\PasswordController;
 use App\Http\Controllers\Api\Proveedor\ProveedorController;
 use App\Http\Controllers\Api\Proyectos\ProyectosController;
 use App\Http\Controllers\Api\Requisiciones\RequisicionesController;
+use App\Http\Controllers\Api\Supervisor\SupervisorController;
+use App\Http\Controllers\Api\Trabajador\TrabajadorController;
 use App\Http\Controllers\CotizacionesProveedoresController;
 use App\Http\Controllers\InvoiceController;
 
@@ -100,6 +102,22 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/getGridData', [PlantillaController::class, 'getGridData'])->name('plantillas.getGridData');
         Route::post('/getData', [PlantillaController::class, 'getData'])->name('plantillas.getData');
         Route::post('/deleteData', [PlantillaController::class, 'deleteData'])->name('plantillas.deleteData');
+    });
+
+    Route::prefix('supervisores')->group(function() {
+        Route::post('/getDataGridParams', [SupervisorController::class, 'getDataGridParams'])->name('supervisores.getDataGridParams');
+        Route::post('/setData', [SupervisorController::class, 'setData'])->name('supervisores.setData');
+        Route::post('/getGridData', [SupervisorController::class, 'getGridData'])->name('supervisores.getGridData');
+        Route::post('/getData', [SupervisorController::class, 'getData'])->name('supervisores.getData');
+        Route::post('/deleteData', [SupervisorController::class, 'deleteData'])->name('supervisores.deleteData');
+    });
+
+    Route::prefix('trabajadores')->group(function() {
+        Route::post('/getDataGridParams', [TrabajadorController::class, 'getDataGridParams'])->name('trabajadores.getDataGridParams');
+        Route::post('/setData', [TrabajadorController::class, 'setData'])->name('trabajadores.setData');
+        Route::post('/getGridData', [TrabajadorController::class, 'getGridData'])->name('trabajadores.getGridData');
+        Route::post('/getData', [TrabajadorController::class, 'getData'])->name('trabajadores.getData');
+        Route::post('/deleteData', [TrabajadorController::class, 'deleteData'])->name('trabajadores.deleteData');
     });
 
     Route::prefix('roles')->group(function () {
