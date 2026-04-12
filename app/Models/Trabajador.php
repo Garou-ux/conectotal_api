@@ -27,4 +27,14 @@ class Trabajador extends Model
     protected $casts = [
         'fecha_contratacion' => 'date'
     ];
+
+    public function supervisor()
+    {
+        return $this->belongsTo(Supervisor::class);
+    }
+
+    public function plantillaProyectoDetalles()
+    {
+        return $this->hasMany(PlantillaProyectoDetalle::class);
+    }
 }

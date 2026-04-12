@@ -21,4 +21,14 @@ class Supervisor extends Model
         'curp',
         'user_id'
     ];
+
+    public function trabajadores()
+    {
+        return $this->hasMany(Trabajador::class);
+    }
+
+    public function plantillaProyectos()
+    {
+        return $this->hasMany(PlantillaProyecto::class);
+    }
 }

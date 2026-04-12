@@ -8,6 +8,7 @@ use App\Http\Controllers\Api\Ticket\TicketsController;
 use App\Http\Controllers\Api\Ticket\TicketsCategoriasController;
 use App\Http\Controllers\Api\Cliente\ClientesController;
 use App\Http\Controllers\Api\Plantilla\PlantillaController;
+use App\Http\Controllers\Api\PlantillaProyecto\PlantillaProyectoController;
 use App\Http\Controllers\Api\Productos\ProductosCategoriasController;
 use App\Http\Controllers\Api\Productos\ProductosController;
 use App\Http\Controllers\Api\Roles\RolesController;
@@ -104,6 +105,15 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/deleteData', [PlantillaController::class, 'deleteData'])->name('plantillas.deleteData');
     });
 
+    Route::prefix('plantillaProyectos')->group(function () {
+        Route::post('/getDataGridParams', [PlantillaProyectoController::class, 'getDataGridParams'])->name('plantillaProyectos.getDataGridParams');
+        Route::post('/setData', [PlantillaProyectoController::class, 'setData'])->name('plantillaProyectos.setData');
+        Route::post('/getGridData', [PlantillaProyectoController::class, 'getGridData'])->name('plantillaProyectos.getGridData');
+        Route::post('/getData', [PlantillaProyectoController::class, 'getData'])->name('plantillaProyectos.getData');
+        Route::post('/getReporteData', [PlantillaProyectoController::class, 'getReporteData'])->name('plantillaProyectos.getReporteData');
+        Route::post('/deleteData', [PlantillaProyectoController::class, 'deleteData'])->name('plantillaProyectos.deleteData');
+    });
+
     Route::prefix('supervisores')->group(function() {
         Route::post('/getDataGridParams', [SupervisorController::class, 'getDataGridParams'])->name('supervisores.getDataGridParams');
         Route::post('/setData', [SupervisorController::class, 'setData'])->name('supervisores.setData');
@@ -162,4 +172,3 @@ Route::middleware(['auth'])->group(function () {
     });
 
 });
-
