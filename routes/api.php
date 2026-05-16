@@ -111,6 +111,7 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/getGridData', [PlantillaProyectoController::class, 'getGridData'])->name('plantillaProyectos.getGridData');
         Route::post('/getData', [PlantillaProyectoController::class, 'getData'])->name('plantillaProyectos.getData');
         Route::post('/getReporteData', [PlantillaProyectoController::class, 'getReporteData'])->name('plantillaProyectos.getReporteData');
+        Route::post('/downloadReporteExcel', [PlantillaProyectoController::class, 'downloadReporteExcel'])->name('plantillaProyectos.downloadReporteExcel');
         Route::post('/deleteData', [PlantillaProyectoController::class, 'deleteData'])->name('plantillaProyectos.deleteData');
     });
 

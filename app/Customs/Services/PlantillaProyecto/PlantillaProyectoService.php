@@ -271,6 +271,39 @@ class PlantillaProyectoService
         ];
     }
 
+    public function getReporteExcel($id): array
+    {
+        $plantillaProyecto = PlantillaProyecto::query()
+            ->with([
+                'supervisor',
+                'detalles.trabajador',
+                'detalles.dias',
+            ])
+            ->findOrFail($id);
+
+        $supervisor = trim(collect([
+            $plantillaProyecto->supervisor?->nombre,
+            $plantillaProyecto->supervisor?->apellido_paterno,
+            $plantillaProyecto->supervisor?->apellido_materno,
+        ])->filter()->implode(' '));
+
+        $html = view('exports.plantilla-proyecto-reporte', [
+            'plantillaProyecto' => $plantillaProyecto,
+            'supervisor' => $supervisor,
+            'diasCabecera' => $this->buildDiasCabecera($plantillaProyecto),
+            'detalles' => $this->ordenarDetallesPorApellido($plantillaProyecto->detalles),
+        ])->render();
+
+        return [
+            'filename' => sprintf(
+                'reporte_tiempo_semana_%s_proyecto_%s.xls',
+                $plantillaProyecto->semana,
+                preg_replace('/[^A-Za-z0-9_-]+/', '_', $plantillaProyecto->numero_proyecto ?: $plantillaProyecto->id)
+            ),
+            'content' => $html,
+        ];
+    }
+
     public function deleteData($id)
     {
         $plantillaProyecto = PlantillaProyecto::findOrFail($id);
@@ -295,18 +328,41 @@ class PlantillaProyectoService
         $tn = round($diasCollection->sum('horas_normales'), 2);
         $hes = round($diasCollection->sum('horas_extra'), 2);
 
-        $descanso = round($diasCollection->where('es_descanso', true)->sum('horas_extra'), 2);
+        $descanso = round($diasCollection
+            ->where('es_descanso', true)
+            ->sum(fn ($dia) => $dia['horas_normales'] + $dia['horas_extra']), 2);
 
         if ($descanso <= 0 && $diasCollection->isNotEmpty()) {
             $descanso = round((float) $diasCollection->last()['horas_extra'], 2);
         }
 
-        $extrasNoDescanso = round(max(0, $hes - $descanso), 2);
+        $extrasNoDescanso = round(max(0, $diasCollection
+            ->where('es_descanso', false)
+            ->sum('horas_extra')), 2);
         $hdo = round(min(8, $descanso), 2);
         $hd = round(min(9, $extrasNoDescanso), 2);
-        $ht = round(max(0, $hes - $hdo - $hd), 2);
+        $ht = round(max(0, $extrasNoDescanso - $hd), 2);
 
         return compact('tn', 'hes', 'hdo', 'hd', 'ht');
+    }
+
+    private function ordenarDetallesPorApellido($detalles)
+    {
+        return $detalles
+            ->sortBy(function ($detalle) {
+                $trabajador = $detalle->trabajador;
+
+                if ($trabajador) {
+                    return mb_strtolower(trim(collect([
+                        $trabajador->apellido_paterno,
+                        $trabajador->apellido_materno,
+                        $trabajador->nombre,
+                    ])->filter()->implode(' ')));
+                }
+
+                return mb_strtolower((string) $detalle->nombre_trabajador);
+            })
+            ->values();
     }
 
     private function resolveMes(array $data): int

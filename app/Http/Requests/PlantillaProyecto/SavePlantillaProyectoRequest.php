@@ -6,6 +6,31 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class SavePlantillaProyectoRequest extends FormRequest
 {
+    protected function prepareForValidation(): void
+    {
+        $data = $this->all();
+
+        foreach (['id', 'catalogo_semana_id', 'proyecto_id'] as $field) {
+            $data[$field] = $this->nullableId($data[$field] ?? null);
+        }
+
+        if (isset($data['detalles']) && is_array($data['detalles'])) {
+            foreach ($data['detalles'] as $detalleIndex => $detalle) {
+                $data['detalles'][$detalleIndex]['id'] = $this->nullableId($detalle['id'] ?? null);
+                $data['detalles'][$detalleIndex]['trabajador_id'] = $this->nullableId($detalle['trabajador_id'] ?? null);
+
+                if (isset($detalle['dias']) && is_array($detalle['dias'])) {
+                    foreach ($detalle['dias'] as $diaIndex => $dia) {
+                        $data['detalles'][$detalleIndex]['dias'][$diaIndex]['id'] = $this->nullableId($dia['id'] ?? null);
+                        $data['detalles'][$detalleIndex]['dias'][$diaIndex]['proyecto_id'] = $this->nullableId($dia['proyecto_id'] ?? null);
+                    }
+                }
+            }
+        }
+
+        $this->replace($data);
+    }
+
     /**
      * Determine if the user is authorized to make this request.
      */
@@ -46,12 +71,25 @@ class SavePlantillaProyectoRequest extends FormRequest
             'detalles.*.dias.*.dia_semana' => ['required', 'integer', 'min:1', 'max:7'],
             'detalles.*.dias.*.fecha' => ['nullable', 'date'],
             'detalles.*.dias.*.nombre_dia' => ['nullable', 'string', 'max:20'],
-            'detalles.*.dias.*.horas_normales' => ['nullable', 'numeric', 'min:0', 'max:24'],
-            'detalles.*.dias.*.horas_extra' => ['nullable', 'numeric', 'min:0', 'max:24'],
+            'detalles.*.dias.*.horas_normales' => ['nullable', 'numeric', 'min:0', 'max:999.99'],
+            'detalles.*.dias.*.horas_extra' => ['nullable', 'numeric', 'min:0', 'max:999.99'],
             'detalles.*.dias.*.proyecto_id' => ['nullable', 'integer', 'exists:proyectos,id'],
             'detalles.*.dias.*.numero_proyecto' => ['nullable', 'string', 'max:50'],
             'detalles.*.dias.*.es_descanso' => ['nullable', 'boolean'],
             'detalles.*.dias.*.observaciones' => ['nullable', 'string', 'max:255'],
         ];
+    }
+
+    private function nullableId($value)
+    {
+        if ($value === null || $value === '') {
+            return null;
+        }
+
+        if (is_numeric($value) && (int) $value === 0) {
+            return null;
+        }
+
+        return $value;
     }
 }

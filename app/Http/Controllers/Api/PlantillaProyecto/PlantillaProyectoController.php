@@ -61,6 +61,18 @@ class PlantillaProyectoController extends Controller
         ]);
     }
 
+    public function downloadReporteExcel(Request $request)
+    {
+        $excel = $this->service->getReporteExcel((int) $request->get('id'));
+
+        return response($excel['content'], 200, [
+            'Content-Type' => 'application/vnd.ms-excel; charset=UTF-8',
+            'Content-Disposition' => 'attachment; filename="' . $excel['filename'] . '"',
+            'Cache-Control' => 'max-age=0, no-cache, no-store, must-revalidate',
+            'Pragma' => 'no-cache',
+        ]);
+    }
+
     public function deleteData(Request $request)
     {
         try {
