@@ -7,11 +7,12 @@ return [
     'allowed_methods' => ['*'],
 
     'allowed_origins' => [
-        'https://simecproyectos.net',     // producción
-        'http://localhost',               // navegadores locales (sin puerto)
-        'http://localhost:*',             // cualquier puerto local (ej. 4200, 8080)
-        'http://127.0.0.1',               // también sin puerto
-        'http://127.0.0.1:*',             // cualquier puerto
+        'https://simecproyectos.net',
+        'https://www.simecproyectos.net',
+        'http://localhost',
+        'http://localhost:*',
+        'http://127.0.0.1',
+        'http://127.0.0.1:*',
     ],
 
     'allowed_origins_patterns' => [],
@@ -22,8 +23,5 @@ return [
 
     'max_age' => 0,
 
-    'supports_credentials' => true,  // habilítalo si usas tokens/cookies
+    'supports_credentials' => true,
 ];
-
-
-

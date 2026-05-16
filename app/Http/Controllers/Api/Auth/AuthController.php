@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 use App\Http\Requests\RegistrationRequest;
-use App\Http\Requests\Loginrequest;
+use App\Http\Requests\LoginRequest;
 use PHPOpenSourceSaver\JWTAuth\Facades\JWTAuth;
 
 
@@ -18,7 +18,7 @@ class AuthController extends Controller
 {
     /*Login method*/
 
-    public function login(Loginrequest $request){
+    public function login(LoginRequest $request){
         $token = auth()->attempt($request->validated());
         if( $token ){
             return $this->responseWithToken($token, auth()->user());
