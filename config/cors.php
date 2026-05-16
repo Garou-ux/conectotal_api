@@ -10,12 +10,13 @@ return [
         'https://simecproyectos.net',
         'https://www.simecproyectos.net',
         'http://localhost',
-        'http://localhost:*',
         'http://127.0.0.1',
-        'http://127.0.0.1:*',
     ],
 
-    'allowed_origins_patterns' => [],
+    'allowed_origins_patterns' => [
+        '#^http://localhost:\d+$#',
+        '#^http://127\.0\.0\.1:\d+$#',
+    ],
 
     'allowed_headers' => ['*'],
 
