@@ -3,7 +3,19 @@
         Options -MultiViews -Indexes
     </IfModule>
 
+    <IfModule mod_headers.c>
+        SetEnvIfNoCase Origin "^https://(www\.)?simecproyectos\.net$" CORS_ALLOWED_ORIGIN=$0
+
+        Header always set Access-Control-Allow-Origin "%{CORS_ALLOWED_ORIGIN}e" env=CORS_ALLOWED_ORIGIN
+        Header always set Access-Control-Allow-Methods "GET, POST, PUT, PATCH, DELETE, OPTIONS" env=CORS_ALLOWED_ORIGIN
+        Header always set Access-Control-Allow-Headers "Origin, Content-Type, Accept, Authorization, X-Requested-With" env=CORS_ALLOWED_ORIGIN
+        Header always set Vary "Origin" env=CORS_ALLOWED_ORIGIN
+    </IfModule>
+
     RewriteEngine On
+
+    RewriteCond %{REQUEST_METHOD} OPTIONS
+    RewriteRule ^ - [R=204,L]
 
     # Handle Authorization Header
     RewriteCond %{HTTP:Authorization} .
